@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 取消 struts2 动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<!-- 是否启用开发模式 -->
+	<constant name="struts.devMode" value="false" />
+	<!-- 所有匹配 *.action 的请求都由 struts2 处理 -->
+	<constant name="struts.action.extension" value="action" />
+	<!-- struts 配置文件改动后，是否重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<!-- 设置浏览器是否缓存静态内容 -->
+	<constant name="struts.serve.static.browserCache" value="false" />
+	<!-- 自动重新加载映射加载 -->
+	<constant name="struts.convention.classes.reload" value="true"/>
+	<!-- action 对象是由Spring负责创建  -->
+    <constant name="struts.objectFactory" value="spring" />
+
+	<package name="user" namespace="/" extends="struts-default">
+		<action name="user_addJdkInterception" class="userAction" method="addJdkInterception"></action>
+		<action name="user_addSpringInterception" class="userAction" method="addSpringInterception"></action>
+	</package>
+     
+</struts>
