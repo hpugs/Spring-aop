@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<bean name="userDao" class="com.hpugs.spring.one.dao.UserDaoImpl" lazy-init="true"></bean>
+	<bean name="userService" class="com.hpugs.spring.one.service.UserServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	<bean name="userAction" class="com.hpugs.spring.one.action.UserAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<bean name="timeIntercepation" class="com.hpugs.spring.one.interception.TimeIntercepation" lazy-init="true"></bean>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* com.hpugs.spring.one.service.*.*(..))" id="serviceIntercepation"/>
+		<aop:aspect id="timeAspect" ref="timeIntercepation">
+			<aop:before method="before" pointcut-ref="serviceIntercepation"/>
+			<aop:around method="around" pointcut-ref="serviceIntercepation"/>
+			<aop:after-returning method="afterReturning" pointcut-ref="serviceIntercepation"/>
+			<aop:after method="after" pointcut-ref="serviceIntercepation"/>
+			<aop:after-throwing method="throwing" pointcut-ref="serviceIntercepation"/>
+		</aop:aspect>
+	</aop:config>
+
+</beans>

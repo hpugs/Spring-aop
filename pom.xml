@@ -7,5 +7,6 @@
   <modules>
   	<module>Spring-commons</module>
   	<module>Spring-aop</module>
+  	<module>Spring-xml</module>
   </modules>
 </project>
